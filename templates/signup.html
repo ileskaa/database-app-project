@@ -2,7 +2,7 @@
 {% block title %}Login{% endblock %}
 
 {% block body %}
-<form action="/createuser" method="POST">
+<form action="/signup" method="POST">
   <p>
       Käyttäjätunnus:<br>
       <input type="text" name="username">
@@ -19,6 +19,9 @@
       Sukunimi:<br>
       <input type="text" name="lname">
   </p>
+  <div class="error">
+    {{ error }}
+  </div>
   <input type="submit" value="Luo tili">
 </form>
 {% endblock %}
