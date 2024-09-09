@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+
+{% block body %}
+{% if session.username %}
+  <p>Olet kirjautunut nimellä {{ session.username }}</p>
+  <a href="/logout">Kirjaudu ulos</a>
+{% else %}
+  <form action="/login" method="POST">
+    <p>
+      Käyttäjätunnus:<br>
+      <input type="text" name="username">
+    </p>
+    <p>
+      Salasana:<br>
+      <input type="password" name="password">
+    </p>
+    {{ error }}<br>
+    <input type="submit" value="Kirjaudu">
+  </form>
+
+  <div>Tai</div>
+  <input type="button" value="Luo uusi tili" onclick="location.href = '/signup';">
+{% endif %}
+{% endblock %}
