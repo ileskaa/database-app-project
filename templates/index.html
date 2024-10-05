@@ -5,6 +5,15 @@
 {% if session.username %}
   <p>Olet kirjautunut nimellä {{ session.username }}</p>
   <a href="/logout">Kirjaudu ulos</a>
+
+  <p>Tarjolla olevat kurssit:</p>
+  {% for class in classes %}
+    <div>
+      <a href="/class/{{ encode_url(class.name) }}" class="button">
+        {{ class.name }}
+      </a>
+    </div>
+  {% endfor %}
 {% else %}
   <form action="/login" method="POST">
     <p>
