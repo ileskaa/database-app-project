@@ -12,3 +12,15 @@ Here's a more detailed description of the app's functionalities:
 - Admins can create and remove sports classes.
 - Admins can view who has registered for the club's classes.
 - Admins can remove individuals from the classes.
+
+## Running the app locally
+
+`python3 -m venv venv`
+
+`source venv/bin/activate`
+
+`pip install -r requirements.txt`
+
+Moreover, the following environment variables must be set in your `.env` file:  
+DATABASE_URL  
+SECRET_KEY
