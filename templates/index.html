@@ -27,6 +27,11 @@
     {{ error }}<br>
     <input type="submit" value="Kirjaudu">
   </form>
+  {% with error = get_flashed_messages()[0] %}
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+  {% endwith %}
 
   <div>Tai</div>
   <input type="button" value="Luo uusi tili" onclick="location.href = '/signup';">

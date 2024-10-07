@@ -1,6 +1,6 @@
 from db import db
 from app import app
-from flask import render_template, request, redirect, session
+from flask import render_template, request, redirect, session, url_for, flash
 from sqlalchemy.sql import text
 from sqlalchemy import exc
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -52,19 +52,24 @@ def login():
     sql = text("SELECT id, password FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username": username})
     user = result.fetchone()
+    print("user", user)
     if not user:
-        print("invalid user")
-        return render_template("index.html", error="Invalid credentials")
+        flash("Invalid user")
+        return redirect(url_for("index"))
+        # return render_template("index.html", error="Invalid credentials")
     else:
         hash_value = user.password
         if check_password_hash(hash_value, password):
             session["username"] = username
             # Token that will be checked when forms are submitted
             session["csrf_token"] = secrets.token_hex(16)
-            return redirect("/")
+            return redirect(url_for("index"))
         else:
             print("invalid pswd")
-            return render_template("index.html", error="Invalid credentials")
+            # return render_template("index.html", error="Invalid credentials")
+            flash('Invalid credentials')
+            return redirect(url_for("index"))
+            # return redirect(url_for("index", error="Invalid credentials"))
 
 
 @app.route("/logout")
