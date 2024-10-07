@@ -1,0 +1,9 @@
+<div id="header">
+<a href="/" class="home-link"><h3>Sporttimonnit</h3></a>
+{% if session.username %}
+  <div>
+    {{ session.username }}
+    <a href="/logout" class="button ml-8">Kirjaudu ulos</a>
+  </div>
+{% endif %}
+</div>

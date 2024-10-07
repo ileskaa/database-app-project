@@ -3,9 +3,6 @@
 
 {% block body %}
 {% if session.username %}
-  <p>Olet kirjautunut nimellä {{ session.username }}</p>
-  <a href="/logout">Kirjaudu ulos</a>
-
   <p>Tarjolla olevat kurssit:</p>
   {% for class in classes %}
     <div>
