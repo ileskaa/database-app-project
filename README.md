@@ -24,3 +24,7 @@ Here's a more detailed description of the app's functionalities:
 Moreover, the following environment variables must be set in your `.env` file:  
 DATABASE_URL  
 SECRET_KEY
+
+Note: it is recommended you create a separate database when testing this app. The DATABASE_URL within your .env should then point to that databae.
+
+Initialize the database tables by running `psql -f sql/init_db.sql`
