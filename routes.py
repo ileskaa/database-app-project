@@ -27,7 +27,12 @@ def send():
 # You can put variable names in your view functions
 @app.route("/class/<name>")
 def classes(name):
-    return render_template("class.html", name=name)
+    name = urllib.parse.unquote_plus(name)
+    sql = text("SELECT description from classes WHERE name=:name")
+    result = db.session.execute(sql, {"name": name})
+    single_row = result.fetchone()
+    description = single_row.description
+    return render_template("class.html", name=name, description=description)
 
 
 @app.context_processor

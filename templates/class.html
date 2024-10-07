@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ name }}{% endblock %}
+
+{% block body %}
+<div class="page-content">
+  <div class="mb-10 mt-20"><b>{{ name }}</b></div>
+  <div class="mb-10">{{ description }}</div>
+  <form action="/class/signup" method="POST">
+    <input type="submit" value="Ilmoittaudu" class="button">
+  </form>
+</div>
+{% endblock %}
