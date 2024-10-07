@@ -5,7 +5,7 @@
 {% if session.username %}
   <p>Tarjolla olevat kurssit:</p>
   {% for class in classes %}
-    <div>
+    <div class="mb-10">
       <a href="/class/{{ encode_url(class.name) }}" class="button">
         {{ class.name }}
       </a>
