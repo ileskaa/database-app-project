@@ -46,4 +46,21 @@ header h3 {
   cursor: pointer;
   border-radius: 4px;
 }
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mx-10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.ml-8 {
+  margin-left: 8px;
+}
 }
