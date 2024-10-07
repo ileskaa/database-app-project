@@ -7,6 +7,8 @@ CREATE TABLE users (
 );
 
 CREATE TABLE classes (
-    name VARCHAR(50) UNIQUE,
-    description TEXT
+CREATE TABLE enrollments (
+    class VARCHAR(50) REFERENCES classes (name),
+    username VARCHAR(35) REFERENCES users (username),
+    PRIMARY KEY (class, username)
 );
