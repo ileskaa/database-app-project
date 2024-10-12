@@ -1,0 +1,11 @@
+<p>Tarjolla olevat kurssit:</p>
+{% for class in classes %}
+  <div class="mb-10">
+    <a href="/class/{{ encode_url(class.name) }}" class="button">
+      {{ class.name }}
+    </a>
+  </div>
+{% endfor %}
+{% if is_admin %}
+  <a href="/class/add" class="add-btn">Lisää kurssi</a>
+{% endif %}
