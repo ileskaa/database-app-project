@@ -64,7 +64,6 @@ def class_signup():
         abort(403)
     # Save registration to database
     selected_class = request.form["class"]
-    print("class:", selected_class)
     username = session["username"]
     sql = text("INSERT INTO enrollments VALUES (:class, :username)")
     db.session.execute(sql, {"class": selected_class, "username": username})
@@ -95,7 +94,6 @@ def my_classes():
     sql = text("SELECT class FROM enrollments WHERE username=:username")
     result = db.session.execute(sql, {"username": username})
     enrollments = result.fetchall()
-    print(enrollments)
     return render_template("myclasses.html", enrollments=enrollments)
 
 
