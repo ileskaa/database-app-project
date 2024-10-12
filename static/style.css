@@ -27,6 +27,11 @@ header h3 {
   font: bold 16px;
 }
 
+.header-link{
+  color: white;
+  margin-right: 16px;
+}
+
 .page-content {
   max-width: 75ch;
   margin-left: auto;
