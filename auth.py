@@ -73,5 +73,6 @@ def login():
 
 @app.route("/logout")
 def logout():
-    del session["username"]
+    # Remove both the username and the csrf_token
+    session.clear()
     return redirect("/")
