@@ -10,6 +10,14 @@ def index():
     sql = text("SELECT name FROM classes")
     result = db.session.execute(sql)
     classes = result.fetchall()
+    if session:
+        username = session['username']
+        sql = text("SELECT admin FROM users WHERE username=:username")
+        result = db.session.execute(sql, {"username": username})
+        is_admin = result.fetchone().admin
+        return render_template(
+            "index.html", classes=classes, is_admin=is_admin
+        )
     return render_template("index.html", classes=classes)
 
 
