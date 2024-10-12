@@ -55,6 +55,9 @@ header h3 {
   border-left: 1px solid #CCCCCC;
   cursor: pointer;
   border-radius: 4px;
+  display: inline-block; /* To make margins work */
+  margin-bottom: 4px;
+}
 }
 
 .mt-20 {
