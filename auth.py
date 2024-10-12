@@ -7,8 +7,9 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import secrets
 
 
-def create_session(username: str):
+def create_session(username: str, is_admin: bool):
     session["username"] = username
+    session["is_admin"] = is_admin
     # Token that will be checked when forms are submitted
     session["csrf_token"] = secrets.token_hex(16)
 
@@ -51,7 +52,7 @@ def signup():
 def login():
     username = request.form["username"]
     password = request.form["password"]
-    sql = text("SELECT password FROM users WHERE username=:username")
+    sql = text("SELECT password, admin FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username": username})
     user = result.fetchone()
     if not user:
@@ -60,7 +61,8 @@ def login():
     else:
         hash_value = user.password
         if check_password_hash(hash_value, password):
-            create_session(username)
+            is_admin = user.admin
+            create_session(username, is_admin)
             return redirect(url_for("index"))
         else:
             flash('Invalid credentials')
