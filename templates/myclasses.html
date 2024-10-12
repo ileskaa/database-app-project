@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Kurssini{% endblock %}
+
+{% block body %}
+{% if enrollments %}
+  {% for enrollment in enrollments %}
+    <div>{{ enrollment.class }}</div>
+  {% endfor %}
+{% else %}
+Et ole vielä ilmoittautunut millekään kurssille
+{% endif %}
+{% endblock %}

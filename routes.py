@@ -48,6 +48,14 @@ def cancel_class():
     return redirect(origin)
 
 
+@app.route("/myclasses")
+def my_classes():
+    username = session["username"]
+    sql = text("SELECT class FROM enrollments WHERE username=:username")
+    result = db.session.execute(sql, {"username": username})
+    enrollments = result.fetchall()
+    print(enrollments)
+    return render_template("myclasses.html", enrollments=enrollments)
 
 
 @app.context_processor
