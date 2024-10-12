@@ -26,7 +26,6 @@ def createuser():
     except exc.DataError:
         error = "The username should not exceed 35 characters"
         return render_template("signup.html", error=error)
-
     fname = request.form["fname"]
     lname = request.form["lname"]
     sql = text("INSERT INTO members (fname, lname) VALUES (:fname, :lname)")
@@ -35,7 +34,6 @@ def createuser():
     except exc.DataError:
         error = "The username should not exceed 35 characters"
         return render_template("signup.html", error=error)
-
     db.session.commit()
     create_session(username)
     return redirect("/")
@@ -53,10 +51,9 @@ def signup():
 def login():
     username = request.form["username"]
     password = request.form["password"]
-    sql = text("SELECT id, password FROM users WHERE username=:username")
+    sql = text("SELECT password FROM users WHERE username=:username")
     result = db.session.execute(sql, {"username": username})
     user = result.fetchone()
-    print("user", user)
     if not user:
         flash("Invalid user")
         return redirect(url_for("index"))
@@ -66,7 +63,6 @@ def login():
             create_session(username)
             return redirect(url_for("index"))
         else:
-            print("invalid pswd")
             flash('Invalid credentials')
             return redirect(url_for("index"))
 
