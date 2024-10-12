@@ -7,6 +7,12 @@ from werkzeug.security import check_password_hash, generate_password_hash
 import secrets
 
 
+def create_session(username: str):
+    session["username"] = username
+    # Token that will be checked when forms are submitted
+    session["csrf_token"] = secrets.token_hex(16)
+
+
 def createuser():
     username = request.form["username"]
     password = request.form["password"]
@@ -31,9 +37,7 @@ def createuser():
         return render_template("signup.html", error=error)
 
     db.session.commit()
-
-    session["username"] = username
-
+    create_session(username)
     return redirect("/")
 
 
@@ -59,9 +63,7 @@ def login():
     else:
         hash_value = user.password
         if check_password_hash(hash_value, password):
-            session["username"] = username
-            # Token that will be checked when forms are submitted
-            session["csrf_token"] = secrets.token_hex(16)
+            create_session(username)
             return redirect(url_for("index"))
         else:
             print("invalid pswd")
