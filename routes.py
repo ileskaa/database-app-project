@@ -32,6 +32,21 @@ def classes(name):
     result = db.session.execute(sql, {"classname": classname})
     single_row = result.fetchone()
     description = single_row.description
+@app.route("/class/signup", methods=["POST"])
+def class_signup():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    # Save registration to database
+    selected_class = request.form["class"]
+    print("class:", selected_class)
+    username = session["username"]
+    sql = text("INSERT INTO enrollments VALUES (:class, :username)")
+    db.session.execute(sql, {"class": selected_class, "username": username})
+    db.session.commit()
+    origin = request.environ['HTTP_REFERER']
+    return redirect(origin)
+
+
 @app.route("/class/cancel", methods=["POST"])
 def cancel_class():
     if session["csrf_token"] != request.form["csrf_token"]:
