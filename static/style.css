@@ -32,10 +32,15 @@ header h3 {
   margin-right: 16px;
 }
 
+.center-hor {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .page-content {
   max-width: 75ch;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .button {
