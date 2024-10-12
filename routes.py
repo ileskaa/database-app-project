@@ -1,6 +1,6 @@
 from db import db
 from app import app
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session, abort
 from sqlalchemy.sql import text
 import urllib.parse
 
@@ -32,6 +32,24 @@ def classes(name):
     result = db.session.execute(sql, {"classname": classname})
     single_row = result.fetchone()
     description = single_row.description
+    # Check if user is already registered to that class
+    sql = text("SELECT COUNT(*) FROM enrollments \
+        WHERE username=:username AND class=:classname")
+    username = session["username"]
+    result = db.session.execute(sql, {
+        "username": username,
+        "classname": classname
+    })
+    single_row = result.fetchone()
+    is_registered = single_row.count
+    return render_template(
+        "class.html",
+        classname=classname,
+        description=description,
+        is_registered=is_registered
+    )
+
+
 @app.route("/class/signup", methods=["POST"])
 def class_signup():
     if session["csrf_token"] != request.form["csrf_token"]:
