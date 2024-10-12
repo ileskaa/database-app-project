@@ -58,6 +58,12 @@ header h3 {
   display: inline-block; /* To make margins work */
   margin-bottom: 4px;
 }
+
+.add {
+  display: inline-block;
+  background-color: forestgreen;
+  color: white;
+  margin-top: 16px;
 }
 
 .mt-20 {
