@@ -1,9 +1,9 @@
 {% extends "base.html" %}
-{% block title %}{{ name }}{% endblock %}
+{% block title %}{{ classname }}{% endblock %}
 
 {% block body %}
 <div class="page-content">
-  <div class="mb-10 mt-20"><b>{{ name }}</b></div>
+  <div class="mb-10 mt-20"><b>{{ classname }}</b></div>
   <div class="mb-10">{{ description }}</div>
   {% if not is_registered %}
     <form action="/class/signup" method="POST">

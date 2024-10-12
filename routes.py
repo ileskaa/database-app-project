@@ -27,9 +27,9 @@ def send():
 # You can put variable names in your view functions
 @app.route("/class/<name>")
 def classes(name):
-    name = urllib.parse.unquote_plus(name)
-    sql = text("SELECT description from classes WHERE name=:name")
-    result = db.session.execute(sql, {"name": name})
+    classname = urllib.parse.unquote_plus(name)
+    sql = text("SELECT description from classes WHERE name=:classname")
+    result = db.session.execute(sql, {"classname": classname})
     single_row = result.fetchone()
     description = single_row.description
 @app.route("/class/cancel", methods=["POST"])
