@@ -14,9 +14,11 @@
     </form>
   {% else %}
     <span class="green-text">Olet ilmoittautunut kurssille.</span>
-  <form action="/class/signup" method="POST">
-    <input type="submit" value="Ilmoittaudu" class="button">
-  </form>
+    <form action="/class/cancel" method="post">
+      <input type="hidden" name="class" value="{{ classname }}">
+      <input type="submit" value="Peru ilmoittautuminen">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    </form>
   {% endif %}
 </div>
 {% endblock %}

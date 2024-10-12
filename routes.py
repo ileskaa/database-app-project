@@ -32,7 +32,22 @@ def classes(name):
     result = db.session.execute(sql, {"name": name})
     single_row = result.fetchone()
     description = single_row.description
-    return render_template("class.html", name=name, description=description)
+@app.route("/class/cancel", methods=["POST"])
+def cancel_class():
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
+    username = session["username"]
+    class_to_cancel = request.form["class"]
+    sql = text("DELETE FROM enrollments WHERE username=:username \
+                AND class=:class_to_cancel")
+    db.session.execute(sql, {
+        "username": username, "class_to_cancel": class_to_cancel
+    })
+    db.session.commit()
+    origin = request.environ['HTTP_REFERER']
+    return redirect(origin)
+
+
 
 
 @app.context_processor
