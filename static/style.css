@@ -72,3 +72,7 @@ header h3 {
 .error {
   color: red;
 }
+
+.green-text {
+  color: green;
+}
