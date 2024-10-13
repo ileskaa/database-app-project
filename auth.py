@@ -36,7 +36,7 @@ def createuser():
         error = "The username should not exceed 35 characters"
         return render_template("signup.html", error=error)
     db.session.commit()
-    create_session(username)
+    create_session(username, False)
     return redirect("/")
 
 
