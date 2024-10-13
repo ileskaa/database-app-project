@@ -27,6 +27,10 @@ def createuser():
     except exc.DataError:
         error = "The username should not exceed 35 characters"
         return render_template("signup.html", error=error)
+    except exc.IntegrityError:
+        error = "The username " + username + " is already registered"
+        return render_template("signup.html", error=error)
+
     fname = request.form["fname"]
     lname = request.form["lname"]
     sql = text("INSERT INTO members (fname, lname) VALUES (:fname, :lname)")
