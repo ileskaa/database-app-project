@@ -3,9 +3,16 @@
 
 {% block body %}
 {% if enrollments %}
-  {% for enrollment in enrollments %}
-    <div>{{ enrollment.class }}</div>
-  {% endfor %}
+  <div class="mb-10">Olet ilmoittautunut seuraaville kursseille:</div>
+  <div class="wrapper">
+    {% for enrollment in enrollments %}
+      <div class="mb-10">
+        <a href="/class/{{ encode_url(enrollment.class) }}" class="button">
+          {{ enrollment.class }}
+        </a>
+      </div>
+    {% endfor %}
+  </div>  
 {% else %}
 Et ole vielä ilmoittautunut millekään kurssille.
 {% endif %}
