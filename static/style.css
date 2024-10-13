@@ -94,3 +94,19 @@ header h3 {
 .green-text {
   color: green;
 }
+
+.red-text {
+  color: #ab0000;
+}
+
+.inline {
+  display: inline;
+}
+
+.cancel {
+  background-color: crimson;
+  display: inline-block;
+  color: white;
+  margin-top: 14px;
+  font-size: 14px;
+}

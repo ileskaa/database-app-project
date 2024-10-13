@@ -1,3 +1,7 @@
+{% with msg = get_flashed_messages()[0] %}
+  <div class="red-text">{{ msg }}</div>
+{% endwith %}
+
 <p>Tarjolla olevat kurssit:</p>
 {% for class in classes %}
   <div class="mb-10">

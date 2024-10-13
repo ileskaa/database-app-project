@@ -112,6 +112,18 @@ def create_class():
     return redirect(url_for("add_class"))
 
 
+@app.route("/class/remove", methods=["POST"])
+def remove_class():
+    classname = request.form["classname"]
+    sql = text("DELETE FROM classes WHERE name=:classname")
+    db.session.execute(sql, {
+        "classname": classname
+    })
+    db.session.commit()
+    flash(classname + " poistettiin")
+    return redirect(url_for("index"))
+
+
 @app.route("/myclasses")
 def my_classes():
     if not session:

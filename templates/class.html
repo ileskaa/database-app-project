@@ -5,7 +5,12 @@
 <div class="page-content">
   <div class="mb-10 mt-20"><b>{{ classname }}</b></div>
   <div class="mb-10">{{ description }}</div>
-  {% if not is_registered %}
+  {% if session["is_admin"] %}
+    <form class="inline" method="POST" action="/class/remove">
+      <input type="hidden" name="classname" value="{{ classname }}">
+      <input class="cancel button" type="submit" value="Poista kurssi">
+    </form>
+  {% elif not is_registered %}
     <form action="/class/signup" method="POST">
       <input type="hidden" name="class" value="{{ classname }}">
       <!-- Hide button if already registered -->
