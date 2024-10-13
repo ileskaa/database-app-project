@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Add a class{% endblock %}
+
+{% block body %}
+  <form action="/class/create" method="POST">
+    <div>Kurssin nimi:</div>
+    <input required type="text" name="classname">
+    <div>Kurssin kuvaus:</div>
+    <textarea required name="description" rows="5" cols="33"></textarea><br>
+    <input class="button mt-14" type="submit" value="Luo">
+  </form>
+  {% with msg = get_flashed_messages()[0] %}
+    <div class="green-text">{{ msg }}</div>
+  {% endwith %}
+{% endblock %}

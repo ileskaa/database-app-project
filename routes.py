@@ -1,6 +1,8 @@
 from db import db
 from app import app
-from flask import render_template, request, redirect, session, abort
+from flask import (
+    render_template, request, redirect, session, abort, flash, url_for
+)
 from sqlalchemy.sql import text
 import urllib.parse
 
@@ -86,6 +88,26 @@ def cancel_class():
     db.session.commit()
     origin = request.environ['HTTP_REFERER']
     return redirect(origin)
+
+
+@app.route("/class/add", methods=["GET"])
+def add_class():
+    if not session or not session["is_admin"]:
+        abort(401)
+    return render_template("add_class.html")
+
+
+@app.route("/class/create", methods=["POST"])
+def create_class():
+    classname = request.form["classname"]
+    description = request.form["description"]
+    sql = text("INSERT INTO classes VALUES (:classname, :description)")
+    db.session.execute(sql, {
+        "classname": classname, "description": description
+    })
+    db.session.commit()
+    flash(classname + " luotiin onnistuneesti")
+    return redirect(url_for("add_class"))
 
 
 @app.route("/myclasses")
