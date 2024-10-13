@@ -87,7 +87,11 @@ header h3 {
   margin-left: 8px;
 }
 
-.error {
+.ml-12 {
+  margin-left: 8px;
+}
+
+.error, .delete {
   color: red;
 }
 
@@ -109,4 +113,9 @@ header h3 {
   color: white;
   margin-top: 14px;
   font-size: 14px;
+}
+
+.comment {
+  padding: 10px 0px;
+  border-bottom: 1px solid lightgray;
 }
