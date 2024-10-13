@@ -21,9 +21,35 @@
     <span class="green-text">Olet ilmoittautunut kurssille.</span>
     <form action="/class/cancel" method="post">
       <input type="hidden" name="class" value="{{ classname }}">
-      <input type="submit" value="Peru ilmoittautuminen">
+      <input class="cancel button" type="submit" value="Peru ilmoittautuminen">
       <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
     </form>
   {% endif %}
+
+  {% if not session["is_admin"] %}
+    <div class="mt-20">Jätä kommentti:</div>
+    <form method="POST" action="/class/comment">
+      <input type="hidden" name="class" value="{{ classname }}">
+      <textarea required name="comment" rows="9" cols="70"></textarea><br>
+      <input class="button mt-14" type="submit" value="Lähetä">
+      <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+    </form>
+  {% endif %}
+
+  <div class="mt-20">
+    {% for row in comment_rows %}
+      <div class="comment">
+        <b>{{ row.username }}</b>
+        {% if row.username == session["username"] or session["is_admin"] %}
+          <form class="inline ml-12" method="post" action="/delete/comment">
+            <input type="hidden" name="comment_id" value="{{ row.id }}">
+            <input type="submit" class="delete" value="Poista kommentti">
+            <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+          </form>
+        {% endif %}
+        <div>{{ row.comment }}</div>
+      </div>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

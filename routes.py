@@ -40,25 +40,36 @@ def classes(name):
     if not session:
         abort(401)
     classname = urllib.parse.unquote_plus(name)
-    sql = text("SELECT description from classes WHERE name=:classname")
-    result = db.session.execute(sql, {"classname": classname})
+    sql_get_description = text(
+        "SELECT description from classes WHERE name=:classname"
+    )
+    result = db.session.execute(sql_get_description, {"classname": classname})
     single_row = result.fetchone()
     description = single_row.description
     # Check if user is already registered to that class
-    sql = text("SELECT COUNT(*) FROM enrollments \
+    sql_count = text("SELECT COUNT(*) FROM enrollments \
         WHERE username=:username AND class=:classname")
     username = session["username"]
-    result = db.session.execute(sql, {
+    result = db.session.execute(sql_count, {
         "username": username,
         "classname": classname
     })
     single_row = result.fetchone()
     is_registered = single_row.count
+    # Get comments
+    sql_get_comments = text(
+        "SELECT id, username, comment from comments WHERE classname=:classname"
+    )
+    result = db.session.execute(sql_get_comments, {
+        "classname": classname
+    })
+    comment_rows = result.fetchall()
     return render_template(
         "class.html",
         classname=classname,
         description=description,
-        is_registered=is_registered
+        is_registered=is_registered,
+        comment_rows=comment_rows
     )
 
 
@@ -124,6 +135,25 @@ def remove_class():
     return redirect(url_for("index"))
 
 
+@app.route("/class/comment", methods=["POST"])
+def send_comment():
+    classname = request.form["class"]
+    username = session["username"]
+    comment = request.form["comment"]
+    sql = text(
+        "INSERT INTO comments(classname, username, comment) \
+            VALUES (:classname, :username, :comment)"
+    )
+    db.session.execute(sql, {
+        "classname": classname,
+        "username": username,
+        "comment": comment
+    })
+    db.session.commit()
+    origin = request.environ['HTTP_REFERER']
+    return redirect(origin)
+
+
 @app.route("/myclasses")
 def my_classes():
     if not session:
@@ -133,6 +163,16 @@ def my_classes():
     result = db.session.execute(sql, {"username": username})
     enrollments = result.fetchall()
     return render_template("myclasses.html", enrollments=enrollments)
+
+
+@app.route("/delete/comment", methods=["POST"])
+def delete_comment():
+    comment_id = request.form["comment_id"]
+    sql = text("DELETE FROM comments WHERE id=:id")
+    db.session.execute(sql, {"id": comment_id})
+    db.session.commit()
+    origin = request.environ['HTTP_REFERER']
+    return redirect(origin)
 
 
 @app.context_processor
