@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS members, users, classes, enrollments;
+DROP TABLE IF EXISTS members, users, classes, comments, enrollments;
 
 \ir schema.sql;
 
