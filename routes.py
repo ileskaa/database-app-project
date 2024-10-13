@@ -37,6 +37,8 @@ def send():
 # You can put variable names in your view functions
 @app.route("/class/<name>")
 def classes(name):
+    if not session:
+        abort(401)
     classname = urllib.parse.unquote_plus(name)
     sql = text("SELECT description from classes WHERE name=:classname")
     result = db.session.execute(sql, {"classname": classname})
@@ -112,6 +114,8 @@ def create_class():
 
 @app.route("/myclasses")
 def my_classes():
+    if not session:
+        abort(401)
     username = session["username"]
     sql = text("SELECT class FROM enrollments WHERE username=:username")
     result = db.session.execute(sql, {"username": username})
