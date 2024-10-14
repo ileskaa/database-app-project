@@ -5,18 +5,19 @@
 <form action="/signup" method="POST">
   <p>
       Käyttäjätunnus:<br>
-      <input type="text" name="username">
+      <input type="text" name="username" minlength="2">
   </p>
   <p>
       Salasana:<br>
-      <input type="password" name="password">
+      <input type="password" name="password" minlength="6">
   </p>
   <p>
       Etunimi:<br>
-      <input type="text" name="fname">
+      <input type="text" name="fname" minlength="2">
   </p>
   <p>
       Sukunimi:<br>
+      <input type="text" name="lname" minlength="2">
   </p>
   <p>
     Sähköposti:<br>
