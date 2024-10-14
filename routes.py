@@ -78,12 +78,27 @@ def get_enrolled_members(classname: str):
     return rows
 
 
+# You can put variable names in your view functions
+@app.route("/class/<name>")
+def classes(name):
+    if not session:
+        abort(401)
+    classname = urllib.parse.unquote_plus(name)
+    if session["is_admin"]:
+        print(get_enrolled_members(classname))
+        return render_template(
+            "class.html",
+            classname=classname,
+            description=get_class_description(classname),
+            comment_rows=get_comments(classname),
+            enrolled_members=get_enrolled_members(classname)
+        )
     return render_template(
         "class.html",
         classname=classname,
-        description=description,
-        is_registered=is_registered,
-        comment_rows=comment_rows
+        description=get_class_description(classname),
+        is_registered=check_if_registered(classname),
+        comment_rows=get_comments(classname)
     )
 
 
