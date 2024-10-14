@@ -14,32 +14,50 @@ def create_session(username: str, is_admin: bool):
     session["csrf_token"] = secrets.token_hex(16)
 
 
+def render_with_error(errormsg: str):
+    return render_template("signup.html", error=errormsg)
+
+
+def get_next_member_id():
+    sql = text("SELECT COUNT(*) FROM members")
+    member_count = db.session.execute(sql).fetchone().count
+    return member_count + 1
+
+
 def createuser():
+    # Save member data
+    member_id = get_next_member_id()
+    fname = request.form["fname"]
+    lname = request.form["lname"]
+    email = request.form["email"]
+    sql = text(
+        "INSERT INTO members(id, fname, lname, email) \
+            VALUES (:id, :fname, :lname, :email)"
+    )
+    db.session.execute(sql, {
+        "id": member_id, "fname": fname, "lname": lname, "email": email
+    })
+    # Save auth data
     username = request.form["username"]
     password = request.form["password"]
     hash_value = generate_password_hash(password)
     sql = text(
-        "INSERT INTO users"
-        "(username, password, admin) VALUES (:username, :password, FALSE)"
+        "INSERT INTO users(username, password, admin, member_id) \
+            VALUES (:username, :password, FALSE, :member_id)"
     )
     try:
-        db.session.execute(sql, {"username": username, "password": hash_value})
+        db.session.execute(sql, {
+            "username": username,
+            "password": hash_value,
+            "member_id": member_id
+        })
     except exc.DataError:
         error = "The username should not exceed 35 characters"
-        return render_template("signup.html", error=error)
+        return render_with_error(error)
     except exc.IntegrityError:
         error = "The username " + username + " is already registered"
-        return render_template("signup.html", error=error)
-
-    fname = request.form["fname"]
-    lname = request.form["lname"]
-    sql = text("INSERT INTO members (fname, lname) VALUES (:fname, :lname)")
-    try:
-        db.session.execute(sql, {"fname": fname, "lname": lname})
-    except exc.DataError:
-        error = "The username should not exceed 35 characters"
-        return render_template("signup.html", error=error)
-    db.session.commit()
+        return render_with_error(error)
+    db.session.commit()  # Emables you to perform transactions
     create_session(username, False)
     return redirect("/")
 
