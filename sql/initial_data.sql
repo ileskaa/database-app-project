@@ -59,6 +59,10 @@ INSERT INTO users VALUES
     3
 );
 
+INSERT INTO enrollments(class, username) VALUES
+('Kuviokellunta', 'aku964'),
+('Brasilialainen Zouk', 'IidaLOL');
+
 INSERT INTO comments(classname, username, comment) VALUES
 (
     'Kuviokellunta',
