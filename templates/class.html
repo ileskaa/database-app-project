@@ -51,5 +51,22 @@
       </div>
     {% endfor %}
   </div>
+
+  {% if session["is_admin"] %}
+    <div class="mt-4em underline">Kurssille ilmoittautuneet jäsenet</div>
+    {% if not enrolled_members %}
+      <div class="mt-20">Kukaan ei ole vielä ilmoittautunut tälle kurssille.</div>
+    {% endif %}
+    {% for member in enrolled_members %}
+      <div class="member">{{ member.fname }} {{ member.lname }}
+      <form class="inline ml-12" method="post" action="/remove/enrollment">
+        <input type="hidden" name="username" value="{{ member.username }}">
+        <input type="hidden" name="classname" value="{{ classname }}">
+        <input type="submit" class="delete" value="Poista ilmoittautuminen">
+        <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+      </form>
+      </div>
+    {% endfor %}
+  {% endif %}
 </div>
 {% endblock %}

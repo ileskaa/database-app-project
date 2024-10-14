@@ -64,6 +64,20 @@ def classes(name):
         "classname": classname
     })
     comment_rows = result.fetchall()
+def get_enrolled_members(classname: str):
+    "SELECT id, fname, lname, username FROM members JOIN users ON id=member_id"
+    sql = text(
+        "SELECT enrollments.username, fname, lname FROM enrollments \
+            JOIN users ON enrollments.username=users.username \
+            JOIN members ON id=member_id WHERE class=:classname"
+    )
+    result = db.session.execute(sql, {
+        "classname": classname
+    })
+    rows = result.fetchall()
+    return rows
+
+
     return render_template(
         "class.html",
         classname=classname,
@@ -170,6 +184,19 @@ def delete_comment():
     comment_id = request.form["comment_id"]
     sql = text("DELETE FROM comments WHERE id=:id")
     db.session.execute(sql, {"id": comment_id})
+    db.session.commit()
+    origin = request.environ['HTTP_REFERER']
+    return redirect(origin)
+
+
+@app.route("/remove/enrollment", methods=["POST"])
+def remove_enrollment():
+    username = request.form["username"]
+    classname = request.form["classname"]
+    sql = text(
+        "DELETE FROM enrollments WHERE username=:username \
+            AND class=:classname")
+    db.session.execute(sql, {"username": username, "classname": classname})
     db.session.commit()
     origin = request.environ['HTTP_REFERER']
     return redirect(origin)
