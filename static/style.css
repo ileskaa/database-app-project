@@ -133,7 +133,15 @@ header h3 {
   margin-left: 10px;
   margin-top: -10px;
   margin-right: auto;
-  background-color: blue;
+}
+
+.bg-blue {
+  background-color: mediumblue;
+  color: white;
+}
+
+.bg-green {
+  background-color: darkcyan;
   color: white;
 }
 
@@ -145,4 +153,10 @@ header h3 {
 
 .underline {
   text-decoration: underline;
+}
+
+.login-form {
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  padding: 20px;
 }

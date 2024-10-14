@@ -1,21 +1,23 @@
 <div class="wrapper">
-<form action="/login" method="POST">
+<form action="/login" method="POST" class="login-form">
   <p>
     Käyttäjätunnus:<br>
-    <input type="text" name="username">
+    <input size="25" type="text" name="username">
   </p>
   <p>
     Salasana:<br>
-    <input type="password" name="password">
+    <input size="25" type="password" name="password">
   </p>
-  <input type="submit" value="Kirjaudu">
+  {% with error = get_flashed_messages()[0] %}
+    {% if error %}
+      <div class="error">{{ error }}</div>
+    {% endif %}
+  {% endwith %}
+  <input type="submit" value="Kirjaudu" class="button bg-blue mt-20">
 </form>
-{% with error = get_flashed_messages()[0] %}
-  {% if error %}
-    <div class="error">{{ error }}</div>
-  {% endif %}
-{% endwith %}
 
+<br>
 <div>Tai</div>
-<input type="button" value="Luo uusi tili" onclick="location.href = '/signup';">
+<br>
+<input type="button" value="Luo uusi tili" onclick="location.href = '/signup';" class="button bg-green">
 </div>
