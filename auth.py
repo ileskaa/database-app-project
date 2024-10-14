@@ -60,6 +60,7 @@ def login():
     result = db.session.execute(sql, {"username": username})
     user = result.fetchone()
     if not user:
+        # Note that flash messages make use of the session cookie
         flash("Invalid user")
         return redirect(url_for("index"))
     else:
