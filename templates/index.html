@@ -3,6 +3,9 @@
 
 {% block body %}
 {% if session.username %}
+  {% if session.is_admin %}
+    <a href="/members" class="members-link button">Kerhon jäsenlista</a>
+  {% endif %}
   {% include 'index/available_classes.html' %}
 {% else %}
   {% include 'index/login.html' %}

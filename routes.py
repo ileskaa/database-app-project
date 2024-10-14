@@ -189,6 +189,26 @@ def delete_comment():
     return redirect(origin)
 
 
+@app.route("/members")
+def members():
+    if not session or not session["is_admin"]:
+        abort(401)
+    sql = text("SELECT id, fname, lname, email FROM members")
+    result = db.session.execute(sql)
+    members = result.fetchall()
+    return render_template("members.html", members=members)
+
+
+@app.route("/remove/member", methods=["POST"])
+def remove_member():
+    member_id = request.form["member_id"]
+    sql = text("DELETE FROM members WHERE id=:id")
+    db.session.execute(sql, {"id": member_id})
+    db.session.commit()
+    origin = request.environ['HTTP_REFERER']
+    return redirect(origin)
+
+
 @app.route("/remove/enrollment", methods=["POST"])
 def remove_enrollment():
     username = request.form["username"]

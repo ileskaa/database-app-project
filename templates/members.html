@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Members{% endblock %}
+
+{% block body %}
+<div class="wrapper">
+Kerhon jäsenet:<br>
+{% for member in members %}
+    <div class="member">
+        <div>
+            {{ member.fname }} {{ member.lname }}
+            <form class="inline ml-12" method="post" action="/remove/member">
+                <input type="hidden" name="member_id" value="{{ member.id }}">
+                <input type="submit" class="delete" value="Poista jäsen">
+                <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+            </form>
+        </div>
+        <div>{{ member.email }}</div>
+    </div>
+{% endfor %}
+</div>
+{% endblock %}
