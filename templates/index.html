@@ -6,6 +6,10 @@
   {% if session.is_admin %}
     <a href="/members" class="members-link button">Kerhon jäsenlista</a>
   {% endif %}
+  <div class="page-content mb-20">
+    Tervetuloa Sporttimonnien sivuille!
+    Täältä löydät varmast itsellesi mieluista liikuntaa.
+  </div>
   {% include 'index/available_classes.html' %}
 {% else %}
   {% include 'index/login.html' %}
