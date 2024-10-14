@@ -7,20 +7,24 @@ from sqlalchemy.sql import text
 import urllib.parse
 
 
-@app.route("/")
-def index():
+def get_classes():
     sql = text("SELECT name FROM classes")
     result = db.session.execute(sql)
     classes = result.fetchall()
-    if session:
+    return classes
+
+
+@app.route("/")
+def index():
+    if session and "username" in session:
         username = session['username']
         sql = text("SELECT admin FROM users WHERE username=:username")
         result = db.session.execute(sql, {"username": username})
         is_admin = result.fetchone().admin
         return render_template(
-            "index.html", classes=classes, is_admin=is_admin
+            "index.html", classes=get_classes(), is_admin=is_admin
         )
-    return render_template("index.html", classes=classes)
+    return render_template("index.html")
 
 
 @app.route("/send", methods=["POST"])
@@ -34,19 +38,16 @@ def send():
     return redirect("/")
 
 
-# You can put variable names in your view functions
-@app.route("/class/<name>")
-def classes(name):
-    if not session:
-        abort(401)
-    classname = urllib.parse.unquote_plus(name)
+def get_class_description(classname: str):
     sql_get_description = text(
         "SELECT description from classes WHERE name=:classname"
     )
     result = db.session.execute(sql_get_description, {"classname": classname})
     single_row = result.fetchone()
-    description = single_row.description
-    # Check if user is already registered to that class
+    return single_row.description
+
+
+def check_if_registered(classname: str):
     sql_count = text("SELECT COUNT(*) FROM enrollments \
         WHERE username=:username AND class=:classname")
     username = session["username"]
@@ -56,7 +57,10 @@ def classes(name):
     })
     single_row = result.fetchone()
     is_registered = single_row.count
-    # Get comments
+    return is_registered
+
+
+def get_comments(classname: str):
     sql_get_comments = text(
         "SELECT id, username, comment from comments WHERE classname=:classname"
     )
@@ -64,6 +68,9 @@ def classes(name):
         "classname": classname
     })
     comment_rows = result.fetchall()
+    return comment_rows
+
+
 def get_enrolled_members(classname: str):
     "SELECT id, fname, lname, username FROM members JOIN users ON id=member_id"
     sql = text(
