@@ -92,7 +92,6 @@ def classes(name):
         abort(401)
     classname = urllib.parse.unquote_plus(name)
     if session["is_admin"]:
-        print(get_enrolled_members(classname))
         return render_template(
             "class.html",
             classname=classname,
