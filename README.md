@@ -14,27 +14,21 @@ Here's a more detailed description of the app's functionalities:
 - Admins can view who has registered for the club's classes.
 - Admins can remove individuals from the classes.
 
-## Running the app locally
+## Testing the App
 
-`python3 -m venv venv`
+The app can be tested at the following URL: [https://database-app-project-patient-surf-6165.fly.dev/](https://database-app-project-patient-surf-6165.fly.dev/)
 
-`source venv/bin/activate`
+Note that when opening the URL, the app might take quite a bit of time to load since the machines running it will go idle if not used for one hour.
 
-`pip install -r requirements.txt`
-
-Moreover, the following environment variables must be set in your `.env` file:  
-DATABASE_URL  
-SECRET_KEY
-
-Note: it is recommended you create a separate database when testing this app. The DATABASE_URL within your .env should then point to that databae.
-
-Initialize the database tables by running `psql -f sql/init_db.sql`
-
-To test the app, the user can log into an admin account with the following credentials:
+Once the page has loaded, you will be presented with a login screen. To test the admin functionalities of the app, the user can log into an admin account with the following credentials:
 - username: admin
 - password: keepsecret
 
-The are also 3 premade users that can be used to test the app's functionalities. They use the following credentials:
+The admin can create new classes by clicking on the green button at the index page. He can also delete any class by clicking on a class, and then pressing the red deletion button. On class pages he can also view and cancel enrollments as well as delete comments .
+
+At any time, the user can go back to the index page by clicking on "Sporttimonnit" in the navbar. From the index, the admin can also view all members of the club clicking on the blue button. From there, the admin has the possiblity to remove any member, which will erase all data related to that account, and the user will no longer be able to log in.
+
+There are also 3 premade user accounts that can be used to test the app's functionalities on normal users. They use the following credentials:
 
 |  username  |     password     |
 | ---------- | ---------------- |
@@ -42,5 +36,8 @@ The are also 3 premade users that can be used to test the app's functionalities.
 | IidaLOL    | oleniidahehe     |
 | aku964     | oispajoperjantai |
 
+Regular users can view the description for any class by selecting a class from the index page. At the class description page, the user can enroll or cancel the enrollment fo that class. He can also leave comments, and delete his own comments.
 
-Alternatively, the user can of course create his own account.
+In the navbar, there is a link from which the user can view all courses for which he has registered.
+
+Instead of using one of the premade accounts, a user can of course create his own account by clicking on the registration button presented at the index page when no one is logged in. The password provided during registration will have to be at least 6 characters long.
