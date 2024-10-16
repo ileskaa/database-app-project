@@ -100,16 +100,12 @@ header h3 {
   margin-left: 8px;
 }
 
-.error, .delete {
+.error, .delete, .red-text {
   color: red;
 }
 
 .green-text {
   color: green;
-}
-
-.red-text {
-  color: #ab0000;
 }
 
 .inline {
