@@ -15,7 +15,7 @@ COPY . .
 
 EXPOSE 8000
 
-ENV GUNICORN_CMD_ARGS="--bind=[::]:8000 --workers=2"
+ENV GUNICORN_CMD_ARGS="--bind=[::]:8000 --workers=3"
 
 #  CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0", "--port=8080"]
 CMD ["gunicorn", "app:app"]
