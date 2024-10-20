@@ -18,7 +18,7 @@ Here's a more detailed description of the app's functionalities:
 
 The app can be tested at the following URL: [https://database-app-project-patient-surf-6165.fly.dev/](https://database-app-project-patient-surf-6165.fly.dev/)
 
-Note that when opening the URL, the app might take quite a bit of time to load since the machines running it will go idle if not used for one hour. Additionally, when the app resumes from idling, it is possible that you get a 500 Internal Server Error in the beginning. If this happens, simply refresh the page and move on. The server sometimes seems to get overloaded when it leaves the idle state.
+Note that when opening the URL, the app might take quite a bit of time to load since the machines running it will go idle if not used for one hour. Additionally, when the app resumes from idling, it is possible that you get an Internal Server Error in the beginning. If this happens, simply refresh the page and move on. The server sometimes seems to get overloaded when it leaves the idle state.
 
 Once the page has loaded, you will be presented with a login screen. To test the admin functionalities of the app, the user can log into an admin account with the following credentials:
 - username: admin
